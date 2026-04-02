@@ -1,7 +1,52 @@
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
+//
+/* */
+import { useEffect, useState } from "react";
+import { getUsers } from "../services/api";
 
 const Istichara = () => {
+
+
+  // 1️⃣ STATE
+  const [users, setUsers] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
+  const [selectedSpeciality, setSelectedSpeciality] = useState("");
+  const [filteredLawyers, setFilteredLawyers] = useState([]);
+
+  // 2️⃣ useEffect → جلب البيانات من backend
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await getUsers();
+        setUsers(res.data);
+
+        const uniqueSpecialities = [
+          ...new Set(res.data.map(user => user.speciality))
+        ];
+
+        setSpecialities(uniqueSpecialities);
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // 3️⃣ useEffect → فلترة المحامين حسب التخصص
+  useEffect(() => {
+    if (selectedSpeciality) {
+      const filtered = users.filter(
+        user => user.speciality === selectedSpeciality
+      );
+      setFilteredLawyers(filtered);
+    }
+  }, [selectedSpeciality, users]);
+
+
+
 
   return (
     <div>
@@ -26,28 +71,36 @@ const Istichara = () => {
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
                   <input type="text" name="phone" value="" placeholder="Phone" required />
                 </div>
-                <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <select name="subject">
-                    <option>Criminal Law</option>
-                    <option>Family Law</option>
-                    <option>Consumer Law</option>
-                    <option>Drug Control Law</option>
-                  </select>
-                </div>
-                <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <select name="lawyer">
-                    <option>Amina Ben Youssef</option>
-                    <option>Leila Trabelsi</option>
-                    <option>Sana Khelifi</option>
-                    <option>Rania Ben Salah</option>
-                    <option>Mouna Jaziri</option>
-                    <option>Ines Gharbi</option>
-                    <option>Olfa Chahed</option>
-                    <option>Asma Belhaj</option>
-                    <option>Hiba Mansouri</option>
-                    <option>Nadia Zouari</option>
-                  </select>
-                </div>
+                {/*display this section only if a speciality is selected */}
+                {selectedSpeciality && (
+                  <div className="form-group col-md-6 col-sm-12 col-xs-12">
+                    <select onChange={(e) => setSelectedSpeciality(e.target.value)}>
+                      <option>Select Speciality</option>
+                      {specialities.map((spec, index) => (
+                        <option key={index} value={spec}>
+                          {spec}
+                        </option>
+                      ))}
+                    </select>
+
+                  </div>
+                )}
+                {/*display this section only if a speciality is selected and there are lawyers in that speciality*/}
+                {selectedSpeciality && filteredLawyers.length > 0 && (
+                  <div className="form-group col-md-6 col-sm-12 col-xs-12">
+
+                    {/* Select المحامين */}
+                    <select>
+                      <option>Select Lawyer</option>
+                      {filteredLawyers.map((lawyer) => (
+                        <option key={lawyer._id} value={lawyer._id}>
+                          {lawyer.name}
+                        </option>
+                      ))}
+                    </select>
+
+                  </div>
+                )}
 
                 {/* Date & Slot as select options */}
                 <div

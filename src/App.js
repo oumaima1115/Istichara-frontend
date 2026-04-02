@@ -1,23 +1,33 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-// import Lawyers from './pages/Lawyers';
-// import Istichara from './pages/Istichara';
-// import Profile from './pages/Profile';
-import Signup from './pages/SignUp';
-import Signin from './pages/SignUp';
+import Lawyers from './pages/Lawyers';
+import Istichara from './pages/Istichara';
+import Profile from './pages/Profile';
+import Connexion from './pages/Connexion';
 import Logout from './pages/Logout';
+import FAQ from './pages/FAQ';
+import ContactUs from './pages/ContactUs';
+import NotFound from './pages/NotFound';
+import Account from './pages/Account';
 
 function App() {
   return (
     <Router>
       <Routes>
+         
+        <Route path="/connexion" element={<Connexion />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/account" element={<Account />} />
+
         <Route path="/" element={<Home />} />
-        {/* <Route path="/lawyers" element={<Lawyers />} />
+        <Route path="/attorneys" element={<Lawyers />} />
         <Route path="/istichara" element={<Istichara />} />
-        <Route path="/profile" element={<Profile />} /> */}
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Signin />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/not-found" element={<NotFound />} />
+
         <Route path="/logout" element={<Logout />} />
+        
       </Routes>
     </Router>
   );

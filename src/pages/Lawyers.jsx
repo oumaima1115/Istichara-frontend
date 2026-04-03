@@ -2,7 +2,54 @@ import '../style/lawyers.css';
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+//
+import { useEffect, useState } from "react";
+import { getUsers } from "../services/api";
 const Lawyers = () => {
+//State
+// STATE
+  const [users, setUsers] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
+  const [selectedSpecialty, setSelectedSpecialty] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // useEffect → جلب البيانات من backend
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await getUsers();
+
+        // ⚠️ حسب كيفاش ترجع data من API
+        const data = res.data || res;
+
+        setUsers(data);
+
+        // استخراج التخصصات بدون تكرار
+        const uniqueSpecialities = [
+          ...new Set(data.map(user => user.speciality))
+        ];
+
+        setSpecialities(uniqueSpecialities);
+
+      } catch (err) {
+        console.error("Error fetching users:", err);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+  //End useEffect
+//End State
+
+  const allSpecialties = ['All', ...specialities];
+
+  const filteredUsers = users.filter((user) => {
+    const matchesSpecialty = selectedSpecialty === 'All' || user.speciality === selectedSpecialty;
+    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.speciality.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSpecialty && matchesSearch;
+  });
+
+  const showSpecialtyInfo = selectedSpecialty !== 'All' && filteredUsers.length > 0;
 
   return (
     <div>
@@ -20,18 +67,25 @@ const Lawyers = () => {
               gap: '10px'
             }}
           >
-
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <button className="filter-btn active">All</button>
-              <button className="filter-btn">Family</button>
-              <button className="filter-btn">Criminal</button>
-              <button className="filter-btn">Consumer</button>
+              {allSpecialties.map((specialty) => (
+                <button
+                  key={specialty}
+                  className={`filter-btn ${selectedSpecialty === specialty ? 'active' : ''}`}
+                  onClick={() => setSelectedSpecialty(specialty)}
+                  type="button"
+                >
+                  {specialty}
+                </button>
+              ))}
             </div>
 
             <div>
               <input
                 type="text"
                 placeholder="Search lawyer..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
                   padding: '8px 12px',
                   border: '1px solid #ddd',
@@ -45,105 +99,64 @@ const Lawyers = () => {
             <h2>Meet Our Attorneys</h2>
           </div>
 
+          {showSpecialtyInfo && (
+            <p style={{ textAlign: 'center', marginBottom: '20px' }}>
+              Showing {filteredUsers.length} {selectedSpecialty} lawyer(s). Use "All" to reset.
+            </p>
+          )}
+
           <div className="row clearfix">
-
-            <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-              <div className="inner-box">
-                <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-1.jpg" alt="" /></a></figure>
-                <div className="member-info">
-                  <h3>David Vigo Michel</h3>
-                  <div className="designation">Family Lawyer</div>
-                </div>
-                <div className="content">
-                  <ul className="contact-info">
-                    <li><span className="icon fa fa-phone"></span> <a href="#">98765-12-345</a></li>
-                    <li><span className="icon fa fa-envelope-o"></span> <a href="#">Davidvigo@domain.com</a></li>
-                  </ul>
-
-                  <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                    <button className="theme-btn btn-style-one">
-                      See profile
-                    </button>
-                  </div>
-                </div>
+            {filteredUsers.length === 0 ? (
+              <div style={{ width: '100%', textAlign: 'center', padding: '30px' }}>
+                No lawyers found for this specialty or search term.
               </div>
-            </article>
+            ) : (
+              filteredUsers.map((user, index) => (
+                <article
+                  key={user.id || index}
+                  className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp"
+                  data-wow-delay={`${index * 300}ms`}
+                  data-wow-duration="1500ms"
+                >
+                  <div className="inner-box">
+                    <figure className="image">
+                      <a href={`mailto:${user.email}`}>
+                        <img src={user.image || 'images/resource/default.jpg'} alt={user.name} />
+                      </a>
+                    </figure>
+                    <div className="member-info">
+                      <h3>{user.name}</h3>
+                      <div className="designation">{user.speciality} Lawyer</div>
+                    </div>
+                    <div className="content">
+                      <ul className="contact-info">
+                        <li>
+                          <span className="icon fa fa-phone" /> <a href={`tel:${user.phone}`}>{user.phone}</a>
+                        </li>
+                        <li>
+                          <span className="icon fa fa-envelope-o" /> <a href={`mailto:${user.email}`}>{user.email}</a>
+                        </li>
+                      </ul>
 
-            <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-              <div className="inner-box">
-                <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-2.jpg" alt="" /></a></figure>
-                <div className="member-info">
-                  <h3>Jem Stone Lawrence</h3>
-                  <div className="designation">Consumer Lawyer</div>
-                </div>
-                <div className="content">
-                  <ul className="contact-info">
-                    <li><span className="icon fa fa-phone"></span> <a href="#">97877-32-100</a></li>
-                    <li><span className="icon fa fa-envelope-o"></span> <a href="#">Jemstone@domain.com</a></li>
-                  </ul>
-
-                  <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                    <button className="theme-btn btn-style-one">
-                      See profile
-                    </button>
+                      <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                        <button className="theme-btn btn-style-one" type="button">
+                          See profile
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </article>
-
-            <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-              <div className="inner-box">
-                <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-3.jpg" alt="" /></a></figure>
-                <div className="member-info">
-                  <h3>Mercy Van Desosa</h3>
-                  <div className="designation">Criminal Lawyer</div>
-                </div>
-                <div className="content">
-                  <ul className="contact-info">
-                    <li><span className="icon fa fa-phone"></span> <a href="#">97901-23-456</a></li>
-                    <li><span className="icon fa fa-envelope-o"></span> <a href="#">Mercydesosa@domain.com</a></li>
-                  </ul>
-
-                  <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                    <button className="theme-btn btn-style-one">
-                      See profile
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="900ms" data-wow-duration="1500ms">
-              <div className="inner-box">
-                <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-4.jpg" alt="" /></a></figure>
-                <div className="member-info">
-                  <h3>Patrick John Meckey</h3>
-                  <div className="designation">Consumer Lawyer</div>
-                </div>
-                <div className="content">
-                  <ul className="contact-info">
-                    <li><span className="icon fa fa-phone"></span> <a href="#">98765-43-210</a></li>
-                    <li><span className="icon fa fa-envelope-o"></span> <a href="#">Patrickmeckey@domain.com</a></li>
-                  </ul>
-
-                  <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                    <button className="theme-btn btn-style-one">
-                      See profile
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
+                </article>
+              ))
+            )}
           </div>
 
-          <div class="styled-pagination text-center">
+          <div className="styled-pagination text-center">
             <ul>
-              <li class="prev"><a href="#"><span class="fa fa-angle-left"></span></a></li>
+              <li className="prev"><a href="#"><span className="fa fa-angle-left"></span></a></li>
               <li><a href="#">1</a></li>
               <li><a href="#">2</a></li>
               <li><a href="#">3</a></li>
-              <li class="next"><a href="#"><span class="fa fa-angle-right"></span></a></li>
+              <li className="next"><a href="#"><span className="fa fa-angle-right"></span></a></li>
             </ul>
           </div>
 

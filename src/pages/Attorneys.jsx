@@ -1,12 +1,33 @@
-import '../style/lawyers.css';
+import '../style/Attorneys.css';
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const Lawyers = () => {
+const Attorneys = () => {
 
   return (
     <div>
       <NavBar />
+
+      {/*Page Title*/}
+      <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+        <div className="auto-container">
+          <h1>Blog single Post</h1>
+        </div>
+      </section>
+
+      <section className="page-info">
+        <div className="auto-container clearfix">
+          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-right">
+            <ul className="bread-crumb clearfix">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="practice-areas.html">News</a></li>
+              <li>Blog single Post</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section className="team-section">
         <div className="auto-container">
 
@@ -31,7 +52,7 @@ const Lawyers = () => {
             <div>
               <input
                 type="text"
-                placeholder="Search lawyer..."
+                placeholder="Search attorney..."
                 style={{
                   padding: '8px 12px',
                   border: '1px solid #ddd',
@@ -52,7 +73,7 @@ const Lawyers = () => {
                 <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-1.jpg" alt="" /></a></figure>
                 <div className="member-info">
                   <h3>David Vigo Michel</h3>
-                  <div className="designation">Family Lawyer</div>
+                  <div className="designation">Family Attorney</div>
                 </div>
                 <div className="content">
                   <ul className="contact-info">
@@ -74,7 +95,7 @@ const Lawyers = () => {
                 <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-2.jpg" alt="" /></a></figure>
                 <div className="member-info">
                   <h3>Jem Stone Lawrence</h3>
-                  <div className="designation">Consumer Lawyer</div>
+                  <div className="designation">Consumer Attorney</div>
                 </div>
                 <div className="content">
                   <ul className="contact-info">
@@ -96,7 +117,7 @@ const Lawyers = () => {
                 <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-3.jpg" alt="" /></a></figure>
                 <div className="member-info">
                   <h3>Mercy Van Desosa</h3>
-                  <div className="designation">Criminal Lawyer</div>
+                  <div className="designation">Criminal Attorney</div>
                 </div>
                 <div className="content">
                   <ul className="contact-info">
@@ -118,7 +139,7 @@ const Lawyers = () => {
                 <figure className="image"><a href="mailto:mail@email.com"><img src="images/resource/team-image-4.jpg" alt="" /></a></figure>
                 <div className="member-info">
                   <h3>Patrick John Meckey</h3>
-                  <div className="designation">Consumer Lawyer</div>
+                  <div className="designation">Consumer Attorney</div>
                 </div>
                 <div className="content">
                   <ul className="contact-info">
@@ -153,4 +174,4 @@ const Lawyers = () => {
     </div>
   );
 }
-export default Lawyers;
+export default Attorneys;

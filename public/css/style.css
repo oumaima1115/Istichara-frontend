@@ -1,4 +1,4 @@
-/* Lawyer Justice HTML5 Template */
+/* Attorney Justice HTML5 Template */
 
 
 /************ TABLE OF CONTENTS ***************
@@ -589,6 +589,10 @@ ul,li{
 	display:none;
 }
 
+.main-header .top-bar .lang-box .lang-list.open {
+  display: block;
+}
+
 .main-header .top-bar .lang-box .lang-list:before{
 	content:'';
 	position:absolute;
@@ -755,7 +759,7 @@ ul,li{
 .main-header .lower-section .outer-box{
 	position:relative;
 	background:#223555;
-	padding:0px 210px 0px 50px;
+	padding:0px 50px 0px 50px;
 	border-radius:3px;
 }
 

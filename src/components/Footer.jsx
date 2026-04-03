@@ -15,10 +15,10 @@ const Footer = () => {
                             <div className="row clearfix">
                                 <div className="col-lg-6 col-sm-6 col-xs-12 column">
                                     <div className="footer-widget about-widget">
-                                        <h3>About Lawyer Justice</h3>
+                                        <h3>About Attorney Justice</h3>
                                         <div className="text">
-                                            <p>Since 1965, who loves or pursues seds or ut desires too obtains <a href="#">Attorneys</a> of itself sed, will ut because it is pain, but because occasionally labor uts lawyer Lawyer Justice occurs.</p>
-                                            <p>Lawyer Justice who loves or pursues seds or ut desires too obtains of itself sed, will ut because it is  Lawyer.</p>
+                                            <p>Since 1965, who loves or pursues seds or ut desires too obtains <a href="#">Attorneys</a> of itself sed, will ut because it is pain, but because occasionally labor uts attorney Attorney Justice occurs.</p>
+                                            <p>Attorney Justice who loves or pursues seds or ut desires too obtains of itself sed, will ut because it is  Attorney.</p>
                                         </div>
                                         
                                         <a href="#" className="theme-btn btn-style-one">Buy this Theme</a>
@@ -76,7 +76,7 @@ const Footer = () => {
                                         <h3>Latest Tweets</h3>	
                                         <div className="feed">
                                             <div className="icon"><span className="fa fa-twitter"></span></div>
-                                            <div className="feed-content"><a href="#">@SteelThemes</a>  Lawyer Justice is Best Template Now.</div>
+                                            <div className="feed-content"><a href="#">@SteelThemes</a>  Attorney Justice is Best Template Now.</div>
                                             <div className="time">10 Mins Ago</div>
                                         </div>
                                         
@@ -88,7 +88,7 @@ const Footer = () => {
                                         
                                         <div className="feed">
                                             <div className="icon"><span className="fa fa-twitter"></span></div>
-                                            <div className="feed-content"><a href="#">@Dragon Tech</a>  Lawyer Justice Have experinced Attorneys.</div>
+                                            <div className="feed-content"><a href="#">@Dragon Tech</a>  Attorney Justice Have experinced Attorneys.</div>
                                             <div className="time">2 Hours Ago</div>
                                         </div>
                                         

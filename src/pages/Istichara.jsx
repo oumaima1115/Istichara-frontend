@@ -6,6 +6,27 @@ const Istichara = () => {
   return (
     <div>
       <NavBar />
+
+      {/*Page Title*/}
+      <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+        <div className="auto-container">
+          <h1>Blog single Post</h1>
+        </div>
+      </section>
+
+      <section className="page-info">
+        <div className="auto-container clearfix">
+          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-right">
+            <ul className="bread-crumb clearfix">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="practice-areas.html">News</a></li>
+              <li>Blog single Post</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/*Consultation Section*/}
       <section className="consult-section" style={{ backgroundImage: `url(images/background/consult-form-bg.jpg)` }}>
         <div className="auto-container">
@@ -35,7 +56,7 @@ const Istichara = () => {
                   </select>
                 </div>
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <select name="lawyer">
+                  <select name="attorney">
                     <option>Amina Ben Youssef</option>
                     <option>Leila Trabelsi</option>
                     <option>Sana Khelifi</option>

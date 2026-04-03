@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import '../style/Navbar.css';
 
 const NavBar = () => {
 
     const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 2000); 
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -41,14 +44,28 @@ const NavBar = () => {
 
                             {/*Language Box*/}
                             <div className="lang-box">
-                                <div className="selected-btn sel-btn"><span className="flag-icon" style={{ backgroundImage: `url(images/icons/icon-flag.png)` }}></span><span className="language-label">English</span><span className="icon fa fa-caret-down"></span></div>
-                                <ul className="lang-list">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Chinese</a></li>
-                                    <li><a href="#">Arabic</a></li>
-                                </ul>
+                                <div
+                                    className="selected-btn sel-btn"
+                                    onClick={() => setOpen(!open)}
+                                >
+                                    <span
+                                        className="flag-icon"
+                                        style={{ backgroundImage: `url(images/icons/icon-flag.png)` }}
+                                    ></span>
+
+                                    <span className="language-label">English</span>
+                                    <span className="icon fa fa-caret-down"></span>
+                                </div>
+
+                                {open && (
+                                    <ul className={`lang-list ${open ? "open" : ""}`}>
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">French</a></li>
+                                        <li><a href="#">German</a></li>
+                                        <li><a href="#">Chinese</a></li>
+                                        <li><a href="#">Arabic</a></li>
+                                    </ul>
+                                )}
                             </div>
 
                         </div>
@@ -62,17 +79,17 @@ const NavBar = () => {
                         <div className="clearfix">
                             {/*Logo Column*/}
                             <div className="logo-column">
-                                <figure className="logo"><a href="index.html"><img src="images/logo.png" alt="Lawyer Justice" title="Lawyer Justice" /></a></figure>
+                                <figure className="logo"><a href="index.html"><img src="images/logo.png" alt="Attorney Justice" style={{ height: "112px" }} title="Attorney Justice" /></a></figure>
                             </div>
                             {/*Info Column*/}
                             <div className="info-column pull-left">
-                                <p>5648 VK 26th Lane - Florida 26154.</p>
-                                <h3>+123.859.1263</h3>
+                                <p>12 Rue de la Technologie, Tunis.</p>
+                                <h3>+216 55 123 456</h3>
                             </div>
                             {/*Info Column*/}
                             <div className="info-column pull-right">
                                 <p>Office Hours: 09.00am - 17.00pm</p>
-                                <h3>info@domain.com</h3>
+                                <h3>contact@istichara.tn</h3>
                             </div>
                         </div>
                     </div>
@@ -105,72 +122,41 @@ const NavBar = () => {
 
                                 <div className="navbar-collapse collapse clearfix">
                                     <ul className="navigation">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li className="dropdown"><a href="about-us.html">About Us</a>
-                                            <ul>
-                                                <li><a href="testimonials.html">Testimonials</a></li>
-                                                <li className="dropdown"><a href="gallery.html">Gallery</a>
-                                                    <ul>
-                                                        <li><a href="gallery.html">Gallery</a></li>
-                                                        <li><a href="gallery-single.html">Gallery Single</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="error.html">404 Page</a></li>
+                                        {/* display flex , justify content on the left  */}
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/attorneys">Attorneys</a></li>
+                                        <li><a href="/istichara">Istichara</a></li>
+                                        <li><a href="/profile">Profile</a></li>
+                                        <li><a href="/faq">FAQ</a></li>
+                                        <li><a href="/contact-us">Contact</a></li>
+                                        {/* on the right side of the navbar */}
+                                        <li className="user-menu">
+                                            <div
+                                                className="user-avatar"
+                                                onClick={() => setOpen(!open)}
+                                            >
+                                                <img
+                                                    src="/images/resource/author-thumb-4.jpg"
+                                                    alt="user"
+                                                />
+                                            </div>
+
+                                            <ul className={`user-dropdown ${open ? "open" : ""}`}>
+                                                <li><a href="/account">Account</a></li>
+                                                <li><a href="/delete-account">Delete Account</a></li>
+                                                <li><a href="/logout">Logout</a></li>
                                             </ul>
                                         </li>
-                                        <li className="dropdown"><a href="practice-areas.html">Practice Areas</a>
-                                            <ul>
-                                                <li><a href="law-single.html">Consumer Law</a></li>
-                                                <li><a href="law-single.html">Family Law</a></li>
-                                                <li><a href="law-single.html">Criminal Law</a></li>
-                                                <li><a href="law-single.html">Drug Control Law</a></li>
-                                                <li><a href="law-single.html">Business Law</a></li>
-                                                <li><a href="law-single.html">Insurance Law</a></li>
-                                            </ul>
-                                        </li>
-                                        <li className="dropdown"><a href="attorneys.html">Attorneys</a>
-                                            <ul>
-                                                <li><a href="attorney-single.html">David Vigo Michel</a></li>
-                                                <li><a href="attorney-single.html">Jem Stone Lawrence</a></li>
-                                                <li><a href="attorney-single.html">Mercy Van Desosa</a></li>
-                                                <li><a href="attorney-single.html">Patrick John Meckey</a></li>
-                                                <li><a href="attorney-single.html">Nancy Williamson</a></li>
-                                                <li><a href="attorney-single.html">Stephen Fernando</a></li>
-                                                <li><a href="attorney-single.html">Serina Jaccobs</a></li>
-                                                <li><a href="attorney-single.html">Darren Flemming</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li className="current dropdown"><a href="blog-classNameic.html">News</a>
-                                            <ul>
-                                                <li><a href="blog-classNameic.html">Blog classNameic Layout</a></li>
-                                                <li><a href="blog-list.html">Blog List Layout</a></li>
-                                                <li><a href="blog-grid.html">Blog Grid Layout</a></li>
-                                                <li><a href="blog-single.html">Blog Single Post</a></li>
-                                            </ul>
-                                        </li>
-                                        <li className="dropdown"><a href="shop.html">Shop</a>
-                                            <ul>
-                                                <li><a href="shop.html">Shop</a></li>
-                                                <li><a href="shop-single.html">Shop Single</a></li>
-                                                <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="register-login.html">Register / Login</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact-us.html">Contact</a></li>
                                     </ul>
                                 </div>
-                            </nav>{/* Main Menu End*/}
 
-                            <div className="link-box"><a href="#" className="theme-btn">Free Consultation</a></div>
+                            </nav>{/* Main Menu End*/}
 
                         </div>
                     </div>
                 </div>{/* Lower Section End*/}
 
             </header>{/*End Main Header */}
-
 
             {/* Hidden Bar */}
             <section className="hidden-bar right-align">
@@ -260,25 +246,6 @@ const NavBar = () => {
             </section>{/* / Hidden Bar */}
 
 
-            {/*Page Title*/}
-            <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
-                <div className="auto-container">
-                    <h1>Blog single Post</h1>
-                </div>
-            </section>
-
-            <section className="page-info">
-                <div className="auto-container clearfix">
-                    <div className="pull-left"><h2>News</h2></div>
-                    <div className="pull-right">
-                        <ul className="bread-crumb clearfix">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="practice-areas.html">News</a></li>
-                            <li>Blog single Post</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 }

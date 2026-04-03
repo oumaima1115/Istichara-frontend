@@ -6,6 +6,27 @@ const ContactUs = () => {
     return (
         <div>
             <NavBar />
+
+            {/*Page Title*/}
+            <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+                <div className="auto-container">
+                    <h1>Blog single Post</h1>
+                </div>
+            </section>
+
+            <section className="page-info">
+                <div className="auto-container clearfix">
+                    <div className="pull-left"><h2>News</h2></div>
+                    <div className="pull-right">
+                        <ul className="bread-crumb clearfix">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="practice-areas.html">News</a></li>
+                            <li>Blog single Post</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             <section class="contact-section">
                 <div class="auto-container">
                     <div class="row clearfix">
@@ -56,7 +77,7 @@ const ContactUs = () => {
                                 </div>
                                 <div class="info-block">
                                     <h3><span class="icon fa fa-phone"></span> Phone</h3>
-                                    <div class="text"><p>+123 859 625, +321 569 742 <br />Lawyerjustice@Steelthemes.com</p></div>
+                                    <div class="text"><p>+123 859 625, +321 569 742 <br />Attorneyjustice@Steelthemes.com</p></div>
                                 </div>
                                 <div class="info-block">
                                     <h3><span class="icon fa fa-clock-o"></span> Office Hours</h3>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Lawyers from './pages/Lawyers';
+import Attorneys from './pages/Attorneys';
 import Istichara from './pages/Istichara';
 import Profile from './pages/Profile';
 import Connexion from './pages/Connexion';
@@ -20,7 +20,7 @@ function App() {
         <Route path="/account" element={<Account />} />
 
         <Route path="/" element={<Home />} />
-        <Route path="/attorneys" element={<Lawyers />} />
+        <Route path="/attorneys" element={<Attorneys />} />
         <Route path="/istichara" element={<Istichara />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact-us" element={<ContactUs />} />

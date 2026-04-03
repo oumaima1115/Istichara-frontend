@@ -1,0 +1,98 @@
+.day-selector {
+
+    display: flex;
+
+    gap: 2px;
+    /* Small gap between buttons */
+
+    border: 1px solid #ccc;
+
+    width: max-content;
+
+}
+
+
+
+.day-selector input[type="checkbox"] {
+
+    display: none;
+    /* Hide the actual checkbox */
+
+}
+
+
+
+.day-selector label {
+
+    padding: 10px 15px;
+
+    cursor: pointer;
+
+    background: #fff;
+
+    color: #007bff;
+    /* Blue text */
+
+    font-family: sans-serif;
+
+    border-right: 1px solid #eee;
+
+    transition: background 0.2s;
+    margin-bottom: 0px;
+
+}
+
+
+
+/* Selected state styling */
+
+.day-selector input[type="checkbox"]:checked+label {
+
+    background: #e0e0e0;
+    /* Gray background from your image */
+
+    font-weight: bold;
+
+}
+
+
+
+.day-selector label:last-child {
+
+    border-right: none;
+
+}
+
+.user-type-selector {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* hide default radio */
+.user-type-selector input[type="radio"] {
+  display: none;
+}
+
+/* style labels like buttons */
+.user-type-selector label {
+  padding: 10px 20px;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.2s;
+}
+
+/* hover effect */
+.user-type-selector label:hover {
+  border-color: #999;
+}
+
+/* checked state */
+.user-type-selector input[type="radio"]:checked + label {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}

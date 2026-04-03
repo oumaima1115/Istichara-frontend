@@ -20,7 +20,7 @@ export const signup = (data) => api.post("/users/signup", data);
 export const login = (data) => api.post("/users/login", data);
 export const logout = () => api.post("/users/logout");
 export const getProfile = () => api.get("/users/profile");
-export const getUsers = () => api.get("/users/users");
+export const getUsers = () => api.get("/user/users");
 export const updateProfile = (data) => api.put("/users/profile", data);
 export const deleteProfile = (data) => api.delete("/users/profile", data);
 

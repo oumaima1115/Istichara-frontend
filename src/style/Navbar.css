@@ -1,0 +1,57 @@
+/* ===== NAVIGATION FIX ===== */
+.navigation {
+  display: flex !important;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+/* remove template float */
+.navigation li {
+  float: none !important;
+  list-style: none;
+  margin-right: 20px;
+}
+
+/* push last item (user) to right */
+.navigation li:last-child {
+  margin-left: auto !important;
+  margin-right: 0;
+  position: relative;
+}
+
+/* ===== USER AVATAR ===== */
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ===== DROPDOWN ===== */
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: #fff;
+  min-width: 150px;
+  display: none;
+  border: 1px solid #ddd;
+  z-index: 999;
+}
+
+.user-dropdown.open {
+  display: block;
+}
+
+.user-dropdown li {
+  padding: 10px;
+  margin: 0;
+}
+
+.user-dropdown li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}

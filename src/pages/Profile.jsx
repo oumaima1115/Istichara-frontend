@@ -6,6 +6,27 @@ const Profile = () => {
   return (
     <div>
       <NavBar />
+
+      {/*Page Title*/}
+      <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+        <div className="auto-container">
+          <h1>Blog single Post</h1>
+        </div>
+      </section>
+
+      <section className="page-info">
+        <div className="auto-container clearfix">
+          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-right">
+            <ul className="bread-crumb clearfix">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="practice-areas.html">News</a></li>
+              <li>Blog single Post</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <div className="sidebar-page-container">
         <div className="auto-container">
           <div className="row clearfix">
@@ -21,7 +42,7 @@ const Profile = () => {
                       <div className="info-header clearfix">
                         <div className="member-info pull-left">
                           <h3>David Vigo Michel</h3>
-                          <div className="designation">Family Lawyer</div>
+                          <div className="designation">Family Attorney</div>
                         </div>
 
                         <ul className="contact-info pull-right">
@@ -71,7 +92,7 @@ const Profile = () => {
                   <div className="styled-heading"><h2>Bar Admissions</h2></div>
                   <ul className="styled-list-three">
                     <li><strong>District of Mexico -</strong> It is a long established fact that a reader will be distracteed by the readable content of a page when looking at its layout the point of using lorem Ipsum is that it has a more-or-less seds normal distriibution he point of using  admissions in the bar admission.</li>
-                    <li><strong>Watican City -</strong> There are many variations of passages of Lorem Ipsum availablee, but the majority have suffered lawyer alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</li>
+                    <li><strong>Watican City -</strong> There are many variations of passages of Lorem Ipsum availablee, but the majority have suffered attorney alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</li>
 
                   </ul>
                 </div>

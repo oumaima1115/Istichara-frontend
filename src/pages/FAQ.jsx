@@ -8,6 +8,26 @@ const FAQ = () => {
             <NavBar />
 
             {/*Page Title*/}
+            <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+                <div className="auto-container">
+                    <h1>Blog single Post</h1>
+                </div>
+            </section>
+
+            <section className="page-info">
+                <div className="auto-container clearfix">
+                    <div className="pull-left"><h2>News</h2></div>
+                    <div className="pull-right">
+                        <ul className="bread-crumb clearfix">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="practice-areas.html">News</a></li>
+                            <li>Blog single Post</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            {/*Page Title*/}
             <section className="tabs-section">
                 <div className="auto-container">
 

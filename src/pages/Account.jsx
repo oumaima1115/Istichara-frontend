@@ -13,6 +13,27 @@ const Account = () => {
     return (
         <div>
             <NavBar />
+
+            {/*Page Title*/}
+            <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
+                <div className="auto-container">
+                    <h1>Blog single Post</h1>
+                </div>
+            </section>
+
+            <section className="page-info">
+                <div className="auto-container clearfix">
+                    <div className="pull-left"><h2>News</h2></div>
+                    <div className="pull-right">
+                        <ul className="bread-crumb clearfix">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="practice-areas.html">News</a></li>
+                            <li>Blog single Post</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             <section className="checkout-section cart-section">
                 <div className="auto-container">
 
@@ -43,7 +64,7 @@ const Account = () => {
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
                                             <div className="field-label">Email Address * </div>
-                                            <input type="text" name="address-1" value="" placeholder="lawyer@example.com" />
+                                            <input type="text" name="address-1" value="" placeholder="attorney@example.com" />
                                         </div>
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
@@ -77,7 +98,7 @@ const Account = () => {
                                                         fontWeight: '700'
                                                     }}
                                                 >
-                                                    Upload Attachments
+                                                    Upload Image
                                                     <input
                                                         type="file"
                                                         name="attachments"
@@ -121,7 +142,7 @@ const Account = () => {
                                             <input
                                                 type="time"
                                                 value={startTime}
-                                                style={{border: "1px solid #ccc", width: "100%"}}
+                                                style={{ border: "1px solid #ccc", width: "100%" }}
                                                 onChange={(e) => setStartTime(e.target.value)}
                                             />
                                         </div>
@@ -131,7 +152,7 @@ const Account = () => {
                                             <input
                                                 type="time"
                                                 value={endTime}
-                                                style={{border: "1px solid #ccc", width: "100%"}}
+                                                style={{ border: "1px solid #ccc", width: "100%" }}
                                                 onChange={(e) => setEndTime(e.target.value)}
                                             />
                                         </div>

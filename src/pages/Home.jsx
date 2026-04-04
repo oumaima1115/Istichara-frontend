@@ -15,42 +15,66 @@ const Home = () => {
 
   useEffect(() => {
     const init = () => {
-      if (window.jQuery && window.jQuery.fn.revolution) {
-        window.jQuery(".revolution-slider .tp-banner").show().revolution({
-          delay: 10000,
-          startwidth: 1200,
-          startheight: 720,
-          hideThumbs: 600,
-          navigationType: 0,
-          navigationArrows: "1",
-          navigationStyle: "preview3",
-          touchenabled: "on",
-          onHoverStop: "off",
-          swipe_velocity: 0.7,
-          swipe_min_touches: 1,
-          swipe_max_touches: 1,
-          drag_block_vertical: false,
-          parallax: "mouse",
-          parallaxBgFreeze: "on",
-          parallaxLevels: [7, 4, 3, 2, 5, 4, 3, 2, 1, 0],
-          keyboardNavigation: "off",
-          navigationHAlign: "center",
-          navigationVAlign: "bottom",
-          soloArrowLeftHalign: "left",
-          soloArrowRightHalign: "right",
-          shadow: 0,
-          fullWidth: "on",
-          fullScreen: "off",
-          spinner: "spinner4",
-          stopLoop: "off",
-          autoHeight: "off",
-          forceFullWidth: "on",
-          hideThumbsOnMobile: "on",
-          hideNavDelayOnMobile: 1500,
-          hideBulletsOnMobile: "on",
-          hideArrowsOnMobile: "on",
-          startWithSlide: 0
-        });
+      if (window.jQuery) {
+        const $ = window.jQuery;
+
+        if ($.fn.revolution) {
+          $(".revolution-slider .tp-banner").show().revolution({
+            delay: 10000,
+            startwidth: 1200,
+            startheight: 720,
+            hideThumbs: 600,
+            navigationType: 0,
+            navigationArrows: "1",
+            navigationStyle: "preview3",
+            touchenabled: "on",
+            onHoverStop: "off",
+            swipe_velocity: 0.7,
+            swipe_min_touches: 1,
+            swipe_max_touches: 1,
+            drag_block_vertical: false,
+            parallax: "mouse",
+            parallaxBgFreeze: "on",
+            parallaxLevels: [7, 4, 3, 2, 5, 4, 3, 2, 1, 0],
+            keyboardNavigation: "off",
+            navigationHAlign: "center",
+            navigationVAlign: "bottom",
+            soloArrowLeftHalign: "left",
+            soloArrowRightHalign: "right",
+            shadow: 0,
+            fullWidth: "on",
+            fullScreen: "off",
+            spinner: "spinner4",
+            stopLoop: "off",
+            autoHeight: "off",
+            forceFullWidth: "on",
+            hideThumbsOnMobile: "on",
+            hideNavDelayOnMobile: 1500,
+            hideBulletsOnMobile: "on",
+            hideArrowsOnMobile: "on",
+            startWithSlide: 0
+          });
+        }
+
+        if ($.fn.owlCarousel) {
+          const testimonialCarousel = $(".testimonial-carousel.single-item-carousel");
+          if (testimonialCarousel.length && !testimonialCarousel.hasClass('owl-loaded')) {
+            testimonialCarousel.owlCarousel({
+              loop: true,
+              margin: 0,
+              nav: true,
+              smartSpeed: 500,
+              autoplay: 5000,
+              navText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
+              responsive: {
+                0: { items: 1 },
+                600: { items: 1 },
+                1024: { items: 1 },
+                1400: { items: 1 }
+              }
+            });
+          }
+        }
       }
     };
 
@@ -455,7 +479,7 @@ const Home = () => {
 
                     <div className="clearfix">
                       <div className="pull-left"><a href="#" className="theme-btn btn-style-one">Free Consultation</a></div>
-                      <div className="pull-right"><p className="phone-info">For criminal charges: <span className="phone">+123.859.1263</span></p></div>
+                      <div className="pull-right"><p className="phone-info">For criminal charges: <span className="phone">+216 55 123 456</span></p></div>
                     </div>
 
 
@@ -509,8 +533,6 @@ const Home = () => {
                         <div className="carousel-outer">
                           {/*Image Carousel*/}
                           <ul className="image-carousel single-item-carousel">
-                            <li><a href="/images/resource/default-image-4.jpg" className="lightbox-image" title="Image Caption Here"><img src="/images/resource/default-image-4.jpg" alt="" /></a></li>
-                            <li><a href="/images/resource/default-image-4.jpg" className="lightbox-image" title="Image Caption Here"><img src="/images/resource/default-image-4.jpg" alt="" /></a></li>
                             <li><a href="/images/resource/default-image-4.jpg" className="lightbox-image" title="Image Caption Here"><img src="/images/resource/default-image-4.jpg" alt="" /></a></li>
                           </ul>
 
@@ -900,25 +922,6 @@ const Home = () => {
             </div>
           </section>
 
-
-          {/*Sponsors Section*/}
-          <section className="sponsors-section">
-            <div className="auto-container">
-              <div className="slider-outer">
-                {/*Sponsors Slider*/}
-                <ul className="sponsors-slider">
-                  <li><a href="#"><img src="/images/sponsors/1.png" alt="" /></a></li>
-                  <li><a href="#"><img src="/images/sponsors/2.png" alt="" /></a></li>
-                  <li><a href="#"><img src="/images/sponsors/3.png" alt="" /></a></li>
-                  <li><a href="#"><img src="/images/sponsors/4.png" alt="" /></a></li>
-                  <li><a href="#"><img src="/images/sponsors/5.png" alt="" /></a></li>
-                </ul>
-              </div>
-
-            </div>
-          </section>
-
-
           {/*Info Section*/}
           <section className="info-section">
             <div className="auto-container">
@@ -957,23 +960,18 @@ const Home = () => {
           </section>
 
           {/*Map Section*/}
-          <section className="map-section">
-            {/*Map Container*/}
-            <div className="map-outer">
-              {/*Map Canvas*/}
-              <div className="map-canvas"
-                data-zoom="12"
-                data-lat="-37.817085"
-                data-lng="144.955631"
-                data-type="roadmap"
-                data-hue="#ffc400"
-                data-title="Envato"
-                data-content="Melbourne VIC 3000, Australia<br/><a href='mailto:info@youremail.com'>info@youremail.com</a>"
-                style={{ height: "500px" }}>
-              </div>
 
-            </div>
-          </section>
+          <div style={{ width: '100%', height: '400px' }}>
+            <iframe
+              title="map"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              src="https://www.google.com/maps?q=40.712784,-74.005941&z=12&output=embed"
+            ></iframe>
+          </div>
 
           <Footer />
         </div>{/*Page Wrapper End*/}

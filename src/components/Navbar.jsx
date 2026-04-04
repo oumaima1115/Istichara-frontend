@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import '../style/Navbar.css';
 import { useAuth } from "../context/AuthContext";
+import { getProfile } from "../services/api";
 
 const NavBar = () => {
 
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
+    const [profilePic, setProfilePic] = useState(null);
     const { state } = useAuth();
 
     useEffect(() => {
@@ -15,6 +17,32 @@ const NavBar = () => {
 
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (!state.user) {
+                setProfilePic(null);
+                return;
+            }
+
+            try {
+                const response = await getProfile();
+                const user = response?.data?.data;
+                if (user?.profilePic) {
+                    const pic = user.profilePic;
+                    const imageUrl = pic.startsWith('http') ? pic : `http://localhost:5000/uploads/${pic}`;
+                    setProfilePic(imageUrl);
+                } else {
+                    setProfilePic(null);
+                }
+            } catch (error) {
+                console.error('Failed to load profile picture:', error);
+                setProfilePic(null);
+            }
+        };
+
+        fetchProfile();
+    }, [state.user]);
 
     return (
         <div>
@@ -139,7 +167,7 @@ const NavBar = () => {
                                                     onClick={() => setOpen(!open)}
                                                 >
                                                     <img
-                                                        src="/images/resource/author-thumb-4.jpg"
+                                                        src={profilePic || "/images/resource/author-thumb-4.jpg"}
                                                         alt="user"
                                                     />
                                                 </div>

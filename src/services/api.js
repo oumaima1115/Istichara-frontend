@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL}/api`,
+   //  baseURL: `${process.env.REACT_APP_API_URL}/api`,
+    baseURL: `http://localhost:5000/api`,
 });
 
 /* ==========================
@@ -16,13 +17,13 @@ api.interceptors.request.use((config) => {
 /* ==========================
    User Auth Routes
 ========================== */
-export const signup = (data) => api.post("/users/signup", data);
-export const login = (data) => api.post("/users/login", data);
-export const logout = () => api.post("/users/logout");
-export const getProfile = () => api.get("/users/profile");
+export const signup = (data) => api.post("/auth/signup", data);
+export const login = (data) => api.post("/auth/login", data);
+export const logout = () => api.post("/auth/logout");
+export const getProfile = () => api.get("/user/profile");
 export const getUsers = () => api.get("/user/users");
-export const updateProfile = (data) => api.put("/users/profile", data);
-export const deleteProfile = (data) => api.delete("/users/profile", data);
+export const updateProfile = (data) => api.put("/user/profile", data);
+export const deleteProfile = (data) => api.delete("/user/profile", data);
 
 /* ==========================
    Istichara Routes

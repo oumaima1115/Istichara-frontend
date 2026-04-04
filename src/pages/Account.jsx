@@ -17,18 +17,18 @@ const Account = () => {
             {/*Page Title*/}
             <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
                 <div className="auto-container">
-                    <h1>Blog single Post</h1>
+                    <h1>Account</h1>
                 </div>
             </section>
 
             <section className="page-info">
                 <div className="auto-container clearfix">
-                    <div className="pull-left"><h2>News</h2></div>
+                    <div className="pull-left"><h2>Account</h2></div>
                     <div className="pull-right">
                         <ul className="bread-crumb clearfix">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="practice-areas.html">News</a></li>
-                            <li>Blog single Post</li>
+                            <li><a href="/">Home</a></li>
+                            <li>Profile Picture</li>
+                            <li><a href="/account">Account</a></li>
                         </ul>
                     </div>
                 </div>
@@ -46,25 +46,25 @@ const Account = () => {
 
                                     <div className="row clearfix">
 
-                                        <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <div className="field-label">Country*</div>
-                                            <input type="text" name="country" value="" />
-                                        </div>
-
                                         <div className="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div className="field-label">Full Name*</div>
-                                            <input type="text" name="fname" value="" />
+                                            <input type="text" name="fname" />
                                         </div>
 
                                         {/* show eye icon for password */}
                                         <div className="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div className="field-label">Password *</div>
-                                            <input type="password" name="lname" value="" />
+                                            <input type="password" name="lname" />
                                         </div>
 
-                                        <div className="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div className="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div className="field-label">Email Address * </div>
-                                            <input type="text" name="address-1" value="" placeholder="attorney@example.com" />
+                                            <input type="text" name="address-1" placeholder="attorney@example.com" />
+                                        </div>
+
+                                        <div className="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div className="field-label">Country*</div>
+                                            <input type="text" name="country" />
                                         </div>
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
@@ -159,12 +159,12 @@ const Account = () => {
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
                                             <div className="field-label">Price Consultation * </div>
-                                            <input type="text" name="price-consultation" value="" placeholder="$100" style={{ border: "1px solid #ccc" }} />
+                                            <input type="text" name="price-consultation" placeholder="$100" style={{ border: "1px solid #ccc" }} />
                                         </div>
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
                                             <div className="field-label">Cases Won * </div>
-                                            <input type="text" name="cases-won" value="" placeholder="30" />
+                                            <input type="text" name="cases-won" placeholder="30" />
                                         </div>
 
                                         <div className="form-group col-md-12 col-sm-12 col-xs-12">
@@ -178,16 +178,10 @@ const Account = () => {
                                             </select>
                                         </div>
 
-                                        <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <div className="field-label">Reviews</div>
-                                            {/* I want to show ratings stars colord in yellow and the number of reviews in brackets. For example: ★★★★☆ (100 reviews) */}
-                                            <div className="reviews">
-                                                <span className="star filled">★</span>
-                                                <span className="star filled">★</span>
-                                                <span className="star filled">★</span>
-                                                <span className="star filled">★</span>
-                                                <span className="star">☆</span>
-                                                <span style={{ marginLeft: '8px' }}>(45 reviews)</span>
+                                        {/* button Save Changes */}
+                                        <div className="clearfix">
+                                            <div className="form-group pull-right">
+                                                <button type="button" className="theme-btn btn-style-one">Save Changes</button>
                                             </div>
                                         </div>
 

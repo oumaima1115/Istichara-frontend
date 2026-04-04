@@ -10,18 +10,17 @@ const Profile = () => {
       {/*Page Title*/}
       <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
         <div className="auto-container">
-          <h1>Blog single Post</h1>
+          <h1>Profile</h1>
         </div>
       </section>
 
       <section className="page-info">
         <div className="auto-container clearfix">
-          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-left"><h2>Profile</h2></div>
           <div className="pull-right">
             <ul className="bread-crumb clearfix">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="practice-areas.html">News</a></li>
-              <li>Blog single Post</li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/profile">Profile</a></li>
             </ul>
           </div>
         </div>
@@ -64,7 +63,7 @@ const Profile = () => {
                       <figure className="signature margin-bott-20"><img src="images/resource/signature-image-2.png" alt="" /></figure>
 
                       <div className="clearfix">
-                        <div className="pull-left padd-right-20"><a href="#" className="theme-btn btn-style-one">For Appoinment</a></div>
+                        <div className="pull-left padd-right-20"><a href="/istichara" className="theme-btn btn-style-one">For Appoinment</a></div>
                         <div className="pull-left">
                           <div className="social-links">
                             <a href="#"><span className="fa fa-facebook-f"></span></a>
@@ -148,7 +147,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <section className="default-form-section" style={{ backgroundImage: "url(images/background/consult-form-bg.jpg);" }}>
+      <section className="default-form-section" style={{ backgroundImage: "url(images/background/consult-form-bg.jpg)" }}>
         <div className="auto-container">
 
           <div className="styled-heading centered">
@@ -159,10 +158,10 @@ const Profile = () => {
             <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
               <div className="row clearfix">
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="text" name="name" value="" placeholder="Your Name" required />
+                  <input type="text" name="name"  placeholder="Your Name" required />
                 </div>
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="email" name="email" value="" placeholder="Email Address" required />
+                  <input type="email" name="email"  placeholder="Email Address" required />
                 </div>
                 <div className="form-group col-md-12 col-sm-12 col-xs-12">
                   <textarea name="message" placeholder="Your Message..." required></textarea>

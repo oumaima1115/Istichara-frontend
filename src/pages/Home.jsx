@@ -766,13 +766,13 @@ const Home = () => {
                 <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
                   <div className="row clearfix">
                     <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                      <input type="text" name="fname" value="" placeholder="First Name" required />
+                      <input type="text" name="fname" placeholder="First Name" required />
                     </div>
                     <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                      <input type="text" name="lname" value="" placeholder="Last Name" required />
+                      <input type="text" name="lname" placeholder="Last Name" required />
                     </div>
                     <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                      <input type="text" name="phone" value="" placeholder="Phone" required />
+                      <input type="text" name="phone" placeholder="Phone" required />
                     </div>
                     <div className="form-group col-md-6 col-sm-12 col-xs-12">
                       <select name="subject">

@@ -10,18 +10,17 @@ const ContactUs = () => {
             {/*Page Title*/}
             <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
                 <div className="auto-container">
-                    <h1>Blog single Post</h1>
+                    <h1>Contact US</h1>
                 </div>
             </section>
 
             <section className="page-info">
                 <div className="auto-container clearfix">
-                    <div className="pull-left"><h2>News</h2></div>
+                    <div className="pull-left"><h2>Contact US</h2></div>
                     <div className="pull-right">
                         <ul className="bread-crumb clearfix">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="practice-areas.html">News</a></li>
-                            <li>Blog single Post</li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/contact-us">Contact US</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,22 +41,22 @@ const ContactUs = () => {
                                 <form id="contact-form" name="contact_form" class="contact-form" action="https://st.ourhtmldemo.com/template/laywer-justice/inc/sendmail.php" method="post">
                                     <div class="row clearfix">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="form_name" class="form-control" value="" placeholder="Your Name *" required="" />
+                                            <input type="text" name="form_name" class="form-control" placeholder="Your Name *" required="" />
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" name="form_email" class="form-control required email" value="" placeholder="Your Mail *" required="" />
+                                            <input type="email" name="form_email" class="form-control required email" placeholder="Your Mail *" required="" />
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="form_phone" class="form-control" value="" placeholder="Phone Number*" required="" />
+                                            <input type="text" name="form_phone" class="form-control" placeholder="Phone Number*" required="" />
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="form_subject" class="form-control" value="" placeholder="Subject" required="" />
+                                            <input type="text" name="form_subject" class="form-control" placeholder="Subject" required="" />
                                         </div>
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                             <textarea name="form_message" class="form-control textarea required" placeholder="Your Message...."></textarea>
                                         </div>
                                         <div class="form-group text-left col-md-12 col-sm-12 col-xs-12">
-                                            <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="" />
+                                            <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" />
                                             <button class="theme-btn btn-style-one" type="submit" data-loading-text="Please wait...">send Now</button>
                                         </div>
                                     </div>

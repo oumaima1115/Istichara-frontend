@@ -1,22 +1,30 @@
 .day-selector {
 
-    display: flex;
+  display: flex;
 
-    gap: 2px;
-    /* Small gap between buttons */
+  gap: 2px;
+  /* Small gap between buttons */
 
-    border: 1px solid #ccc;
+  border: 1px solid #ccc;
 
-    width: max-content;
+  width: max-content;
 
+}
+
+/* Centered styled heading */
+.styled-heading.centered-block {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 100%;
+  display: block;
 }
 
 
 
 .day-selector input[type="checkbox"] {
 
-    display: none;
-    /* Hide the actual checkbox */
+  display: none;
+  /* Hide the actual checkbox */
 
 }
 
@@ -24,21 +32,21 @@
 
 .day-selector label {
 
-    padding: 10px 15px;
+  padding: 10px 15px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    background: #fff;
+  background: #fff;
 
-    color: #007bff;
-    /* Blue text */
+  color: #007bff;
+  /* Blue text */
 
-    font-family: sans-serif;
+  font-family: sans-serif;
 
-    border-right: 1px solid #eee;
+  border-right: 1px solid #eee;
 
-    transition: background 0.2s;
-    margin-bottom: 0px;
+  transition: background 0.2s;
+  margin-bottom: 0px;
 
 }
 
@@ -48,10 +56,10 @@
 
 .day-selector input[type="checkbox"]:checked+label {
 
-    background: #e0e0e0;
-    /* Gray background from your image */
+  background: #e0e0e0;
+  /* Gray background from your image */
 
-    font-weight: bold;
+  font-weight: bold;
 
 }
 
@@ -59,7 +67,7 @@
 
 .day-selector label:last-child {
 
-    border-right: none;
+  border-right: none;
 
 }
 
@@ -91,7 +99,7 @@
 }
 
 /* checked state */
-.user-type-selector input[type="radio"]:checked + label {
+.user-type-selector input[type="radio"]:checked+label {
   background: #000;
   color: #fff;
   border-color: #000;

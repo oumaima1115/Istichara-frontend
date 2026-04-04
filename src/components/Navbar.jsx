@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import '../style/Navbar.css';
+import { useAuth } from "../context/AuthContext";
 
 const NavBar = () => {
 
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
+    const { state } = useAuth();
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -36,7 +38,7 @@ const NavBar = () => {
                             <div className="search-box">
                                 <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
                                     <div className="form-group">
-                                        <input type="search" name="search" value="" placeholder="Search Your Needs Here" />
+                                        <input type="search" name="search" placeholder="Search Your Needs Here" />
                                         <button type="submit" name="search" className="theme-btn search-btn"><span className="fa fa-search"></span></button>
                                     </div>
                                 </form>
@@ -125,28 +127,35 @@ const NavBar = () => {
                                         {/* display flex , justify content on the left  */}
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/attorneys">Attorneys</a></li>
-                                        <li><a href="/istichara">Istichara</a></li>
-                                        <li><a href="/profile">Profile</a></li>
+                                        {state.user && <li><a href="/istichara">Istichara</a></li>}
+                                        {state.user && <li><a href="/profile">Profile</a></li>}
                                         <li><a href="/faq">FAQ</a></li>
                                         <li><a href="/contact-us">Contact</a></li>
                                         {/* on the right side of the navbar */}
-                                        <li className="user-menu">
-                                            <div
-                                                className="user-avatar"
-                                                onClick={() => setOpen(!open)}
-                                            >
-                                                <img
-                                                    src="/images/resource/author-thumb-4.jpg"
-                                                    alt="user"
-                                                />
-                                            </div>
+                                        {state.user ? (
+                                            <li className="user-menu">
+                                                <div
+                                                    className="user-avatar"
+                                                    onClick={() => setOpen(!open)}
+                                                >
+                                                    <img
+                                                        src="/images/resource/author-thumb-4.jpg"
+                                                        alt="user"
+                                                    />
+                                                </div>
 
-                                            <ul className={`user-dropdown ${open ? "open" : ""}`}>
-                                                <li><a href="/account">Account</a></li>
-                                                <li><a href="/delete-account">Delete Account</a></li>
-                                                <li><a href="/logout">Logout</a></li>
-                                            </ul>
-                                        </li>
+                                                <ul className={`user-dropdown ${open ? "open" : ""}`}>
+                                                    <li><a href="/account">Account</a></li>
+                                                    <li><a href="/delete-account">Delete Account</a></li>
+                                                    <li><a href="/logout">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        ) : (
+                                            <li style={{ display: 'flex', gap: '10px' }}>
+                                                <a href="/login" className="theme-btn btn-style-one" style={{ padding: '8px 20px', fontSize: '14px' }}>Sign In</a>
+                                                <a href="/register" className="theme-btn btn-style-two" style={{ padding: '8px 20px', fontSize: '14px' }}>Sign Up</a>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
 

@@ -10,18 +10,17 @@ const Istichara = () => {
       {/*Page Title*/}
       <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
         <div className="auto-container">
-          <h1>Blog single Post</h1>
+          <h1>Istichara</h1>
         </div>
       </section>
 
       <section className="page-info">
         <div className="auto-container clearfix">
-          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-left"><h2>Istichara</h2></div>
           <div className="pull-right">
             <ul className="bread-crumb clearfix">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="practice-areas.html">News</a></li>
-              <li>Blog single Post</li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/istichara">Istichara</a></li>
             </ul>
           </div>
         </div>
@@ -42,10 +41,10 @@ const Istichara = () => {
             <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
               <div className="row clearfix">
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="email" name="lname" value="" placeholder="Email" required />
+                  <input type="email" name="lname" placeholder="Email" required />
                 </div>
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="text" name="phone" value="" placeholder="Phone" required />
+                  <input type="text" name="phone" placeholder="Phone" required />
                 </div>
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
                   <select name="subject">
@@ -79,7 +78,7 @@ const Istichara = () => {
                   {/* LEFT COLUMN → Scheduled Date */}
                   <div style={{ flex: 1 }}>
                     <select name="scheduledDate">
-                      <option value="">Select Date</option>
+                      <option >Select Date</option>
                       <option value="2026-04-05">05 Apr 2026</option>
                       <option value="2026-04-06">06 Apr 2026</option>
                       <option value="2026-04-07">07 Apr 2026</option>
@@ -89,7 +88,7 @@ const Istichara = () => {
                   {/* RIGHT COLUMN → Scheduled Slot */}
                   <div style={{ flex: 1 }}>
                     <select name="scheduledSlot">
-                      <option value="">Select Time Slot</option>
+                      <option >Select Time Slot</option>
                       <option value="09:00-10:00">09:00 - 10:00</option>
                       <option value="10:00-11:00">10:00 - 11:00</option>
                       <option value="14:00-15:00">14:00 - 15:00</option>

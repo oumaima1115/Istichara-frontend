@@ -11,18 +11,17 @@ const Attorneys = () => {
       {/*Page Title*/}
       <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
         <div className="auto-container">
-          <h1>Blog single Post</h1>
+          <h1>Attorneys</h1>
         </div>
       </section>
 
       <section className="page-info">
         <div className="auto-container clearfix">
-          <div className="pull-left"><h2>News</h2></div>
+          <div className="pull-left"><h2>Attorneys</h2></div>
           <div className="pull-right">
             <ul className="bread-crumb clearfix">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="practice-areas.html">News</a></li>
-              <li>Blog single Post</li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/attorneys">Attorneys</a></li>
             </ul>
           </div>
         </div>

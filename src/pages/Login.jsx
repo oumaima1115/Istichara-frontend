@@ -44,7 +44,7 @@ const Login = () => {
 
             localStorage.setItem("token", token);
             setState?.({ user });
-            navigate("/profile");
+            navigate("/");
         } catch (err) {
             setError(err?.response?.data?.message || err.message || "Login failed. Please try again.");
         } finally {

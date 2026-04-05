@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import '../style/Navbar.css';
 import { useAuth } from "../context/AuthContext";
-import { getProfile } from "../services/api";
+import { getProfileById } from "../services/api";
 
 const NavBar = () => {
 
@@ -26,7 +26,7 @@ const NavBar = () => {
             }
 
             try {
-                const response = await getProfile();
+                const response = await getProfileById(state.user.id);
                 const user = response?.data?.data;
                 if (user?.profilePic) {
                     const pic = user.profilePic;
@@ -156,7 +156,6 @@ const NavBar = () => {
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/attorneys">Attorneys</a></li>
                                         {state.user && <li><a href="/istichara">Istichara</a></li>}
-                                        {state.user && <li><a href="/profile">Profile</a></li>}
                                         <li><a href="/faq">FAQ</a></li>
                                         <li><a href="/contact-us">Contact</a></li>
                                         {/* on the right side of the navbar */}

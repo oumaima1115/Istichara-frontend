@@ -20,8 +20,11 @@ api.interceptors.request.use((config) => {
 export const signup = (data) => api.post("/auth/signup", data);
 export const login = (data) => api.post("/auth/login", data);
 export const logout = () => api.post("/auth/logout");
-export const getProfile = () => api.get("/user/profile");
-export const getUsers = () => api.get("/user/users");
+export const getProfileById = (id) => api.get(`/user/profile/${id}`);
+export const getUsers = (params = {}) => {
+  const queryString = new URLSearchParams(params).toString();
+  return api.get(`/user/users${queryString ? `?${queryString}` : ''}`);
+};
 export const updateProfile = (data) => api.put("/user/profile", data);
 export const deleteProfile = (data) => api.delete("/user/profile", data);
 

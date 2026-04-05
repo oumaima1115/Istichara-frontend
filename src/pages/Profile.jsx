@@ -1,30 +1,92 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getProfileById, getUsers } from "../services/api";
 
 const Profile = () => {
+  const { id } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [similarAttorneys, setSimilarAttorneys] = useState([]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setLoading(true);
+        const response = await getProfileById(id);
+        const profileData = response?.data?.data || response?.data;
+        setProfile(profileData);
+
+        // Fetch similar attorneys if this is an attorney profile
+        if (profileData?.role === 'attorney' && profileData?.specialty) {
+          const similarResponse = await getUsers({
+            specialty: profileData.specialty,
+            limit: 5
+          });
+          const attorneys = similarResponse?.data?.data || [];
+          // Filter out the current attorney
+          const filteredAttorneys = attorneys.filter(attorney => attorney._id !== id);
+          setSimilarAttorneys(filteredAttorneys);
+        }
+      } catch (err) {
+        setError(err?.response?.data?.message || err.message || 'Failed to load profile');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div>
+        <NavBar />
+        <div style={{ padding: '50px', textAlign: 'center' }}>
+          <p>Loading profile...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <NavBar />
+        <div style={{ padding: '50px', textAlign: 'center', color: '#c00' }}>
+          <p>{error}</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <div>
+        <NavBar />
+        <div style={{ padding: '50px', textAlign: 'center' }}>
+          <p>Profile not found.</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const backendBase = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/$/, '') : 'http://localhost:5000';
+  const imageSrc = profile.profilePic
+    ? profile.profilePic.startsWith('http')
+      ? profile.profilePic
+      : `${backendBase}/uploads/${profile.profilePic}`
+    : 'images/resource/team-image-9.jpg';
+  const designation = profile.specialty ? `${profile.specialty} Attorney` : 'Attorney';
 
   return (
     <div>
       <NavBar />
-
-      {/*Page Title*/}
-      <section className="page-title" style={{ backgroundImage: `url(images/background/pagetitle-bg.jpg)` }}>
-        <div className="auto-container">
-          <h1>Profile</h1>
-        </div>
-      </section>
-
-      <section className="page-info">
-        <div className="auto-container clearfix">
-          <div className="pull-left"><h2>Profile</h2></div>
-          <div className="pull-right">
-            <ul className="bread-crumb clearfix">
-              <li><a href="/">Home</a></li>
-              <li><a href="/profile">Profile</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
       <div className="sidebar-page-container">
         <div className="auto-container">
@@ -35,35 +97,37 @@ const Profile = () => {
                 <div className="basic-details">
                   <div className="row clearfix">
                     <div className="image-column col-md-5 col-sm-6 col-xs-12">
-                      <figure className="image-box"><img className="img-responsive" src="images/resource/team-image-9.jpg" alt="" /></figure>
+                      <figure className="image-box"><img className="img-responsive" src={imageSrc} alt={profile.name} /></figure>
                     </div>
                     <div className="info-column col-md-7 col-sm-6 col-xs-12">
                       <div className="info-header clearfix">
                         <div className="member-info pull-left">
-                          <h3>David Vigo Michel</h3>
-                          <div className="designation">Family Attorney</div>
+                          <h3>{profile.name}</h3>
+                          <div className="designation">{designation}</div>
                         </div>
 
                         <ul className="contact-info pull-right">
-                          <li><span className="icon fa fa-phone"></span> 98765-12-345</li>
-                          <li><span className="icon fa fa-envelope-o"></span> <a href="#">Stephen@domain.com</a></li>
+                          <li><span className="icon fa fa-envelope-o"></span> <a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+                          {profile.price != null && (
+                            <li><span className="icon fa fa-usd"></span> {profile.price} / consultation</li>
+                          )}
                         </ul>
 
                       </div>
 
                       <div className="text">
-                        <p>Stephen Flemming is a seasoned aggressive attorneydevotes 100% of his practice to criminal defense.Gang Related Attempted Murder to a first time DUI, he has the experience and knowledge to handle the broadesting range of criminal matters.</p>
+                        <p>{profile.role === 'attorney' ? `Experienced ${profile.specialty || 'law'} attorney with ${profile.cases_won || 0} cases won.` : 'Client profile.'}, Skilled in handling a wide range of cases with professionalism and attention to detail. Focused on protecting client rights, providing clear legal guidance, and achieving the best possible outcomes.</p>
                       </div>
 
                       <div className="styled-heading margin-bott-20"><h2>My Objective</h2></div>
                       <div className="text">
-                        <p>Seasoned and aggressive attorney who devotes practice to criminal defense ang related  is a long will be distracted by the justice.</p>
+                        <p>{profile.role === 'attorney' ? `To provide excellent legal services in ${profile.specialty || 'various'} areas of law.` : 'Seeking reliable legal assistance.'} Motivated legal professional committed to justice and client advocacy. Aims to build trust through integrity, strong communication, and consistent results while handling each case with care and precision.</p>
                       </div>
 
                       <figure className="signature margin-bott-20"><img src="images/resource/signature-image-2.png" alt="" /></figure>
 
                       <div className="clearfix">
-                        <div className="pull-left padd-right-20"><a href="/istichara" className="theme-btn btn-style-one">For Appoinment</a></div>
+                        <div className="pull-left padd-right-20"><Link to="/istichara" className="theme-btn btn-style-one">For Appointment</Link></div>
                         <div className="pull-left">
                           <div className="social-links">
                             <a href="#"><span className="fa fa-facebook-f"></span></a>
@@ -78,6 +142,8 @@ const Profile = () => {
                   </div>
                 </div>
 
+
+                {/*Education*/}
                 <div className="education-info">
                   <div className="styled-heading"><h2>About Education</h2></div>
                   <ul className="styled-list-three">
@@ -87,6 +153,8 @@ const Profile = () => {
                   </ul>
                 </div>
 
+
+                {/*Bars*/}
                 <div className="bars-info">
                   <div className="styled-heading"><h2>Bar Admissions</h2></div>
                   <ul className="styled-list-three">
@@ -96,6 +164,8 @@ const Profile = () => {
                   </ul>
                 </div>
 
+
+                {/*Court*/}
                 <div className="court-info">
                   <div className="styled-heading"><h2>Court Admissions</h2></div>
                   <ul className="styled-list-three">
@@ -104,6 +174,7 @@ const Profile = () => {
                   </ul>
                 </div>
 
+                {/*Court*/}
                 <div className="professional-info">
                   <div className="styled-heading"><h2>Professional Affiliations</h2></div>
                   <ul className="styled-list-three">
@@ -113,6 +184,8 @@ const Profile = () => {
                   </ul>
                 </div>
 
+
+                {/*Honors and Awards*/}
                 <div className="awards-info">
                   <div className="styled-heading"><h2>Honors and Awards</h2></div>
                   <div className="text">
@@ -129,13 +202,20 @@ const Profile = () => {
                   <div className="styled-heading"><h2>Similar Attorneys</h2></div>
                   <nav className="nav-outer">
                     <ul>
-                      <li><a href="#">Meet All Attorneys</a></li>
-                      <li className="current"><a href="#">David Vigo Michel</a></li>
-                      <li><a href="#">Jem Stome Lawrence</a></li>
-                      <li><a href="#">Mercy Van Desosa</a></li>
-                      <li><a href="#">Nancy Williamson</a></li>
-                      <li><a href="#">Stephen Fernando</a></li>
-                      <li><a href="#">Darren Flemming</a></li>
+                      <li><Link to="/attorneys">Meet Similar Attorneys</Link></li>
+                      {profile?.role === 'attorney' && (
+                        <li className={id ? 'current' : ''}>
+                          <Link to={id ? `/profile/${id}` : "/profile"}>{profile.name}</Link>
+                        </li>
+                      )}
+                      {similarAttorneys.map((attorney) => (
+                        <li key={attorney._id}>
+                          <Link to={`/profile/${attorney._id}`}>{attorney.name}</Link>
+                        </li>
+                      ))}
+                      {similarAttorneys.length === 0 && profile?.role === 'attorney' && (
+                        <li><span style={{ color: '#999', fontStyle: 'italic' }}>No similar attorneys found</span></li>
+                      )}
                     </ul>
                   </nav>
                 </div>
@@ -155,13 +235,13 @@ const Profile = () => {
           </div>
 
           <div className="default-form">
-            <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+            <form>
               <div className="row clearfix">
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="text" name="name"  placeholder="Your Name" required />
+                  <input type="text" name="name" placeholder="Your Name" required />
                 </div>
                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
-                  <input type="email" name="email"  placeholder="Email Address" required />
+                  <input type="email" name="email" placeholder="Email Address" required />
                 </div>
                 <div className="form-group col-md-12 col-sm-12 col-xs-12">
                   <textarea name="message" placeholder="Your Message..." required></textarea>
@@ -179,5 +259,5 @@ const Profile = () => {
       <Footer />
     </div>
   );
-}
+};
 export default Profile;

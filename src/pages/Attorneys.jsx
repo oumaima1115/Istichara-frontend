@@ -136,7 +136,7 @@ return (
           <h2>Meet Our Attorneys</h2>
         </div>
 
-        <div className="row clearfix">
+        <div className="row clearfix" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
           {loading ? (
             <div style={{ padding: '30px', textAlign: 'center' }}>
               <p>Loading attorneys...</p>

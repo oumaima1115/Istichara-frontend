@@ -2,15 +2,133 @@ import '../style/Home.css';
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import NavBar from '../components/Navbar';
-const Home = () => {
+import { getReviews, getUsers } from "../services/api";
 
+const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const [topAttorneys, setTopAttorneys] = useState([]);
+
+  const topThreeAttorneys = [...topAttorneys]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, i) => (
+      <span
+        key={i}
+        className={`fa fa-star ${i < Math.round(rating) ? "text-warning" : ""}`}
+      ></span>
+    ));
+  };
+
+  const getAverageRating = (reviews) => {
+    if (!reviews || reviews.length === 0) return 0;
+
+    const total = reviews.reduce((sum, r) => sum + r.rating, 0);
+    return total / reviews.length;
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [reviewRes, userRes] = await Promise.all([
+          getReviews(),
+          getUsers(),
+        ]);
+
+        console.log("RAW reviews response:", reviewRes);
+        console.log("RAW users response:", userRes);
+
+        const reviews = reviewRes.data;
+        const users = userRes.data.data;
+
+        console.log("Parsed reviews:", reviews);
+        console.log("Parsed users:", users);
+
+        // keep only attorneys
+        const attorneys = users.filter(
+          (user) => user.role === "attorney"
+        );
+
+        console.log("Attorneys list:", attorneys);
+        console.log("Attorneys count:", attorneys.length);
+
+        // group reviews by attorneyId
+        const grouped = {};
+
+        reviews.forEach((review) => {
+          console.log("Review item:", review);
+          if (!grouped[review.attorneyId]) {
+            grouped[review.attorneyId] = {
+              totalRating: 0,
+              count: 0,
+            };
+          }
+
+          grouped[review.attorneyId].totalRating += review.rating;
+          grouped[review.attorneyId].count += 1;
+        });
+
+        console.log("Grouped reviews:", grouped);
+
+        // build final list
+        const maxCasesWon = Math.max(...attorneys.map(a => a.cases_won || 0));
+        console.log("maxCasesWon:", maxCasesWon);
+
+        const result = attorneys.map((attorney) => {
+          const stats = grouped[attorney.id] || {
+            totalRating: 0,
+            count: 0,
+          };
+
+          const avgRating = stats.count
+            ? stats.totalRating / stats.count
+            : 0;
+
+          const normalizedCases =
+            maxCasesWon > 0 ? (attorney.cases_won || 0) / maxCasesWon : 0;
+
+          const score = avgRating * 0.7 + normalizedCases * 5 * 0.3;
+
+          const item = {
+            ...attorney,
+            avgRating,
+            reviewCount: stats.count,
+            score,
+          };
+
+          console.log("Mapped attorney:", item);
+
+          return item;
+        });
+
+        console.log("Final result before sort:", result);
+        // sort by rating + number of reviews
+        const sorted = result.sort((a, b) => {
+          if (b.avgRating === a.avgRating) {
+            return b.reviewCount - a.reviewCount;
+          }
+          return b.avgRating - a.avgRating;
+        });
+
+        // take top 10
+        setTopAttorneys(sorted.slice(0, 10));
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -580,48 +698,44 @@ const Home = () => {
                       <div className="quote-icon"><span className="fa fa-quote-left"></span></div>
                       {/*Testimonial Carousel*/}
                       <ul className="testimonial-carousel single-item-carousel">
+                        {topAttorneys.map((attorney, index) => (
+                          <li className="slide-item" key={index}>
 
-                        {/*Slide Item*/}
-                        <li className="slide-item">
-                          <div className="slide-text"><p>How to pursue pleasure rationally  consequences that are extremeely painful or again is there anyones who loves or  pursues or desires to obtain pain of itself because its sed great pleasure get well soon.</p></div>
-                          <div className="information clearfix">
-                            <div className="slide-info pull-left">
-                              <figure className="image-thumb"><img src="/images/resource/testi-thumb-1.png" alt="" /></figure>
-                              <h3>Alex Carolina</h3>
-                              <p>CEO of RJX Solutions</p>
+                            <div className="slide-text">
+                              <p>
+                                {attorney.reviews?.[0]?.comment || 'No reviews yet.'}
+                              </p>
                             </div>
-                            <div className="signature pull-right"><img src="/images/resource/signature-image.png" alt="" /></div>
-                          </div>
-                        </li>
 
-                        {/*Slide Item*/}
-                        <li className="slide-item">
-                          <div className="slide-text"><p>How to pursue pleasure rationally  consequences that are extremeely painful or again is there anyones who loves or  pursues or desires to obtain pain of itself because its sed great pleasure get well soon.</p></div>
-                          <div className="information clearfix">
-                            <div className="slide-info pull-left">
-                              <figure className="image-thumb"><img src="/images/resource/testi-thumb-1.png" alt="" /></figure>
-                              <h3>Alex Carolina</h3>
-                              <p>CEO of RJX Solutions</p>
+                            <div className="information clearfix">
+
+                              <div className="slide-info pull-left">
+
+                                <figure className="image-thumb">
+                                  <img
+                                    src={
+                                      attorney.profilePic
+                                        ? `http://localhost:5000/uploads/${attorney.profilePic}`
+                                        : "/default.png"
+                                    }
+                                    alt=""
+                                  />
+                                </figure>
+
+                                <h3>Dr. {attorney.name}</h3>
+                                <p>CEO and {attorney.specialty} Lawyer</p>
+
+                              </div>
+
+                              <div className="stars pull-right">
+                                {renderStars(getAverageRating(attorney.reviews))}
+                              </div>
+
                             </div>
-                            <div className="signature pull-right"><img src="/images/resource/signature-image.png" alt="" /></div>
-                          </div>
-                        </li>
 
-                        {/*Slide Item*/}
-                        <li className="slide-item">
-                          <div className="slide-text"><p>How to pursue pleasure rationally  consequences that are extremeely painful or again is there anyones who loves or  pursues or desires to obtain pain of itself because its sed great pleasure get well soon.</p></div>
-                          <div className="information clearfix">
-                            <div className="slide-info pull-left">
-                              <figure className="image-thumb"><img src="/images/resource/testi-thumb-1.png" alt="" /></figure>
-                              <h3>Alex Carolina</h3>
-                              <p>CEO of RJX Solutions</p>
-                            </div>
-                            <div className="signature pull-right"><img src="/images/resource/signature-image.png" alt="" /></div>
-                          </div>
-                        </li>
-
-                      </ul>{/*End Testimonial Carousel*/}
-
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
                   </div>
@@ -671,102 +785,56 @@ const Home = () => {
                 <h2>Meet Our Attorneys</h2>
               </div>
 
-              <div className="row clearfix">
+              <div className="row clearfix" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                {topThreeAttorneys.map((attorney, index) => (
+                  <article
+                    key={attorney._id}
+                    className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp"
+                    data-wow-delay={`${index * 300}ms`}
+                    data-wow-duration="1500ms"
+                  >
+                    <div className="inner-box">
+                      <figure className="image">
+                        <a href={`mailto:${attorney.email}`}>
+                          <img
 
-                {/*Column*/}
-                <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-                  <div className="inner-box">
-                    <figure className="image"><a href="mailto:mail@email.com"><img src="/images/resource/team-image-1.jpg" alt="" /></a></figure>
-                    <div className="member-info">
-                      <h3>David Vigo Michel</h3>
-                      <div className="designation">Family Attorney</div>
-                    </div>
-                    <div className="content">
-                      <ul className="contact-info">
-                        <li><span className="icon fa fa-phone"></span> <a href="#">98765-12-345</a></li>
-                        <li><span className="icon fa fa-envelope-o"></span> <a href="#">Davidvigo@domain.com</a></li>
-                      </ul>
-                      <div className="social-links">
-                        <a href="#"><span className="fa fa-facebook-f"></span></a>
-                        <a href="#"><span className="fa fa-twitter"></span></a>
-                        <a href="#"><span className="fa fa-google-plus"></span></a>
-                        <a href="#"><span className="fa fa-linkedin"></span></a>
+                            style={{
+                              width: "100%",
+                              height: "220px",
+                              objectFit: "cover"
+                            }}
+                            src={
+                              attorney.profilePic
+                                ? `http://localhost:5000/uploads/${attorney.profilePic}`
+                                : "/images/resource/team-image-1.jpg"
+                            }
+                            alt=""
+                          />
+                        </a>
+                      </figure>
+
+                      <div className="member-info">
+                        <h3>{attorney.name}</h3>
+                        <div className="designation">{attorney.specialty} Attorney</div>
+                      </div>
+
+                      <div className="content">
+                        <ul className="contact-info">
+                          <li>
+                            <span className="icon fa fa-envelope-o"></span>
+                            <a href={`mailto:${attorney.email}`}>{attorney.email}</a>
+                          </li>
+                        </ul>
+
+                        <div className="social-links">
+                          <a href="#"><span className="fa fa-facebook-f"></span></a>
+                          <a href="#"><span className="fa fa-twitter"></span></a>
+                          <a href="#"><span className="fa fa-linkedin"></span></a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </article>
-
-                {/*Column*/}
-                <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-                  <div className="inner-box">
-                    <figure className="image"><a href="mailto:mail@email.com"><img src="/images/resource/team-image-2.jpg" alt="" /></a></figure>
-                    <div className="member-info">
-                      <h3>Jem Stone Lawrence</h3>
-                      <div className="designation">Consumer Attorney</div>
-                    </div>
-                    <div className="content">
-                      <ul className="contact-info">
-                        <li><span className="icon fa fa-phone"></span> <a href="#">97877-32-100</a></li>
-                        <li><span className="icon fa fa-envelope-o"></span> <a href="#">Jemstone@domain.com</a></li>
-                      </ul>
-                      <div className="social-links">
-                        <a href="#"><span className="fa fa-facebook-f"></span></a>
-                        <a href="#"><span className="fa fa-twitter"></span></a>
-                        <a href="#"><span className="fa fa-google-plus"></span></a>
-                        <a href="#"><span className="fa fa-linkedin"></span></a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-
-                {/*Column*/}
-                <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-                  <div className="inner-box">
-                    <figure className="image"><a href="mailto:mail@email.com"><img src="/images/resource/team-image-3.jpg" alt="" /></a></figure>
-                    <div className="member-info">
-                      <h3>Mercy Van Desosa</h3>
-                      <div className="designation">Criminal Attorney</div>
-                    </div>
-                    <div className="content">
-                      <ul className="contact-info">
-                        <li><span className="icon fa fa-phone"></span> <a href="#">97901-23-456</a></li>
-                        <li><span className="icon fa fa-envelope-o"></span> <a href="#">Mercydesosa@domain.com</a></li>
-                      </ul>
-                      <div className="social-links">
-                        <a href="#"><span className="fa fa-facebook-f"></span></a>
-                        <a href="#"><span className="fa fa-twitter"></span></a>
-                        <a href="#"><span className="fa fa-google-plus"></span></a>
-                        <a href="#"><span className="fa fa-linkedin"></span></a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-
-                {/*Column*/}
-                <article className="column team-member col-lg-3 col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="900ms" data-wow-duration="1500ms">
-                  <div className="inner-box">
-                    <figure className="image"><a href="mailto:mail@email.com"><img src="/images/resource/team-image-4.jpg" alt="" /></a></figure>
-                    <div className="member-info">
-                      <h3>Patrick John Meckey</h3>
-                      <div className="designation">Consumer Attorney</div>
-                    </div>
-                    <div className="content">
-                      <ul className="contact-info">
-                        <li><span className="icon fa fa-phone"></span> <a href="#">98765-43-210</a></li>
-                        <li><span className="icon fa fa-envelope-o"></span> <a href="#">Patrickmeckey@domain.com</a></li>
-                      </ul>
-                      <div className="social-links">
-                        <a href="#"><span className="fa fa-facebook-f"></span></a>
-                        <a href="#"><span className="fa fa-twitter"></span></a>
-                        <a href="#"><span className="fa fa-google-plus"></span></a>
-                        <a href="#"><span className="fa fa-linkedin"></span></a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-
-
-
+                  </article>
+                ))}
               </div>
 
             </div>

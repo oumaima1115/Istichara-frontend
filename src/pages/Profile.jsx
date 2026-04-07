@@ -119,29 +119,19 @@ const Profile = () => {
                         <p>{profile.role === 'attorney' ? `Experienced ${profile.specialty || 'law'} attorney with ${profile.cases_won || 0} cases won.` : 'Client profile.'}, Skilled in handling a wide range of cases with professionalism and attention to detail. Focused on protecting client rights, providing clear legal guidance, and achieving the best possible outcomes.</p>
                       </div>
 
-                      <div className="styled-heading margin-bott-20"><h2>My Objective</h2></div>
-                      <div className="text">
-                        <p>{profile.role === 'attorney' ? `To provide excellent legal services in ${profile.specialty || 'various'} areas of law.` : 'Seeking reliable legal assistance.'} Motivated legal professional committed to justice and client advocacy. Aims to build trust through integrity, strong communication, and consistent results while handling each case with care and precision.</p>
-                      </div>
-
-                      <figure className="signature margin-bott-20"><img src="images/resource/signature-image-2.png" alt="" /></figure>
-
-                      <div className="clearfix">
-                        <div className="pull-left padd-right-20"><Link to="/istichara" className="theme-btn btn-style-one">For Appointment</Link></div>
-                        <div className="pull-left">
-                          <div className="social-links">
-                            <a href="#"><span className="fa fa-facebook-f"></span></a>
-                            <a href="#"><span className="fa fa-twitter"></span></a>
-                            <a href="#"><span className="fa fa-google-plus"></span></a>
-                            <a href="#"><span className="fa fa-linkedin"></span></a>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="pull-left padd-right-20"><Link to="/istichara" className="theme-btn btn-style-one">For Appointment</Link></div>
 
                     </div>
                   </div>
                 </div>
 
+                {/* Objectives */}
+                <div className="styled-heading margin-bott-20"><h2>My Objective</h2></div>
+                <div className="text">
+                  <p>{profile.role === 'attorney' ? `To provide excellent legal services in ${profile.specialty || 'various'} areas of law.` : 'Seeking reliable legal assistance.'} Motivated legal professional committed to justice and client advocacy. Aims to build trust through integrity, strong communication, and consistent results while handling each case with care and precision.</p>
+                </div>
+
+                <figure className="signature margin-bott-20"><img src="images/resource/signature-image-2.png" alt="" /></figure>
 
                 {/*Education*/}
                 <div className="education-info">

@@ -2,16 +2,16 @@ import axios from "axios";
 
 const api = axios.create({
    //  baseURL: `${process.env.REACT_APP_API_URL}/api`,
-    baseURL: `http://localhost:5000/api`,
+   baseURL: `http://localhost:5000/api`,
 });
 
 /* ==========================
    Interceptor (JWT)
 ========================== */
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
+   const token = localStorage.getItem("token");
+   if (token) config.headers.Authorization = `Bearer ${token}`;
+   return config;
 });
 
 /* ==========================
@@ -22,8 +22,8 @@ export const login = (data) => api.post("/auth/login", data);
 export const logout = () => api.post("/auth/logout");
 export const getProfileById = (id) => api.get(`/user/profile/${id}`);
 export const getUsers = (params = {}) => {
-  const queryString = new URLSearchParams(params).toString();
-  return api.get(`/user/users${queryString ? `?${queryString}` : ''}`);
+   const queryString = new URLSearchParams(params).toString();
+   return api.get(`/user/users${queryString ? `?${queryString}` : ''}`);
 };
 export const updateProfile = (data) => api.put("/user/profile", data);
 export const deleteProfile = (data) => api.delete("/user/profile", data);
@@ -32,7 +32,25 @@ export const deleteProfile = (data) => api.delete("/user/profile", data);
    Istichara Routes
 ========================== */
 export const getMyisticharas = () => api.get("/istichara");
-export const createIstichara = (data) => api.post("/istichara", data);
+export const createIstichara = (data) => {
+   const formData = new FormData();
+
+   Object.keys(data).forEach((key) => {
+      if (key === "attachments" && data[key]) {
+         for (let i = 0; i < data[key].length; i++) {
+            formData.append("attachments", data[key][i]);
+         }
+      } else {
+         formData.append(key, data[key]);
+      }
+   });
+
+   return api.post("/istichara", formData, {
+      headers: {
+         "Content-Type": "multipart/form-data",
+      },
+   });
+};
 export const updateIstichara = (id, data) => api.put(`/istichara/${id}`, data);
 export const acceptIstichara = (id) => api.patch(`/istichara/${id}/accept`);
 export const refuseIstichara = (id) => api.patch(`/istichara/${id}/refuse`);
@@ -49,9 +67,9 @@ export const deleteReview = (id) => api.delete(`/review/${id}`);
 /* ==========================
    Coupons
 ========================== */
-export const createCoupon = (data) =>  api.post("/coupon", data);
-export const getCoupons = () =>  api.get("/coupon");
-export const updateCoupon = (id, data) =>  api.put(`/coupon/${id}`, data);
-export const deleteCoupon = (id) =>  api.delete(`/coupon/${id}`);
+export const createCoupon = (data) => api.post("/coupon", data);
+export const getCoupons = () => api.get("/coupon");
+export const updateCoupon = (id, data) => api.put(`/coupon/${id}`, data);
+export const deleteCoupon = (id) => api.delete(`/coupon/${id}`);
 
 export default api;

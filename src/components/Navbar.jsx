@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import '../style/Navbar.css';
 import { useAuth } from "../context/AuthContext";
-import { getProfileById } from "../services/api";
+import { getProfileById, getCoupons } from "../services/api";
 
 const NavBar = () => {
 
@@ -9,12 +9,10 @@ const NavBar = () => {
     const [open, setOpen] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const { state } = useAuth();
-    const [coupons, setCoupons] = useState([
-        { code: 'WELCOME10', discount: 10, time: 30 },
-        { code: 'SAVE20', discount: 20, time: 30 },
-    ]);
+    const [coupons, setCoupons] = useState([]);
+
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(coupons[0].time);
+    const [timeLeft, setTimeLeft] = useState(0);
     const [isWarning, setIsWarning] = useState(false);
 
     useEffect(() => {
@@ -26,15 +24,46 @@ const NavBar = () => {
     }, []);
 
     useEffect(() => {
+        fetchCoupons();
+    }, []);
+
+    useEffect(() => {
+        setIsWarning(timeLeft <= 5);
+    }, [timeLeft]);
+
+    const fetchCoupons = async () => {
+        try {
+            const response = await getCoupons();
+            const data = response?.data?.data || [];
+            const validCoupons = data.filter(coupon => {
+                const expirationDate = new Date(coupon.expirationDate);
+                return expirationDate > new Date();
+            }).map(coupon => ({
+                code: coupon.code,
+                discount: coupon.discountPercentage,
+                time: 30,
+            }));
+
+            if (validCoupons.length > 0) {
+                setCoupons(validCoupons);
+                setCurrentIndex(0);
+                setTimeLeft(validCoupons[0].time);
+            }
+        } catch (error) {
+            console.error('Failed to fetch coupons:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (coupons.length === 0) return;
+
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
-                    // switch to next coupon
                     const nextIndex = (currentIndex + 1) % coupons.length;
                     setCurrentIndex(nextIndex);
                     return coupons[nextIndex].time;
                 }
-
                 return prev - 1;
             });
         }, 1000);
@@ -105,21 +134,23 @@ const NavBar = () => {
                                 Our &nbsp;<a href="#">No Fee Promise</a>&nbsp; Means, No Cost Until Your Case is Won.
                             </div>
 
-                            <div
-                                style={{
-                                    padding: '6px 12px',
-                                    borderRadius: '6px',
-                                    backgroundColor: isWarning ? 'red' : 'black',
-                                    color: 'white',
-                                    transition: '0.3s',
-                                    whiteSpace: 'nowrap',
-                                }}
-                            >
-                                <strong>{coupons[currentIndex].code}</strong> - {coupons[currentIndex].discount}% OFF
-                                <span style={{ marginLeft: '10px' }}>
-                                    ({timeLeft}s)
-                                </span>
-                            </div>
+                            {coupons.length > 0 && (
+                                <div
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: '6px',
+                                        backgroundColor: isWarning ? 'red' : 'black',
+                                        color: 'white',
+                                        transition: '0.3s',
+                                        whiteSpace: 'nowrap',
+                                    }}
+                                >
+                                    <strong>{coupons[currentIndex].code}</strong> - {coupons[currentIndex].discount}% OFF
+                                    <span style={{ marginLeft: '10px' }}>
+                                        ({timeLeft}s)
+                                    </span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Top Right */}

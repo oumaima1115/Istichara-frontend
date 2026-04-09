@@ -9,6 +9,13 @@ const NavBar = () => {
     const [open, setOpen] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const { state } = useAuth();
+    const [coupons, setCoupons] = useState([
+        { code: 'WELCOME10', discount: 10, time: 30 },
+        { code: 'SAVE20', discount: 20, time: 30 },
+    ]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(coupons[0].time);
+    const [isWarning, setIsWarning] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -17,6 +24,35 @@ const NavBar = () => {
 
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    // switch to next coupon
+                    const nextIndex = (currentIndex + 1) % coupons.length;
+                    setCurrentIndex(nextIndex);
+                    return coupons[nextIndex].time;
+                }
+
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [currentIndex, coupons]);
+
+    useEffect(() => {
+        if (timeLeft <= 5) {
+            const blink = setInterval(() => {
+                setIsWarning(prev => !prev);
+            }, 500);
+
+            return () => clearInterval(blink);
+        } else {
+            setIsWarning(false);
+        }
+    }, [timeLeft]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -55,8 +91,35 @@ const NavBar = () => {
                 <div className="top-bar">
                     <div className="auto-container clearfix">
                         {/* Top Left */}
-                        <div className="top-left">
-                            <div className="text">Our &nbsp;<a href="#">No Fee Promise</a>&nbsp; Means, No Cost Until Your Case is Won.</div>
+                        <div className="top-left"
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start',
+                                gap: '12px',
+                                flexWrap: 'wrap',
+                            }}
+                        >
+                            <div className="text">
+                                Our &nbsp;<a href="#">No Fee Promise</a>&nbsp; Means, No Cost Until Your Case is Won.
+                            </div>
+
+                            <div
+                                style={{
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    backgroundColor: isWarning ? 'red' : 'black',
+                                    color: 'white',
+                                    transition: '0.3s',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                <strong>{coupons[currentIndex].code}</strong> - {coupons[currentIndex].discount}% OFF
+                                <span style={{ marginLeft: '10px' }}>
+                                    ({timeLeft}s)
+                                </span>
+                            </div>
                         </div>
 
                         {/* Top Right */}
@@ -155,7 +218,11 @@ const NavBar = () => {
                                         {/* display flex , justify content on the left  */}
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/attorneys">Attorneys</a></li>
-                                        {state.user && <li><a href="/istichara">Istichara</a></li>}
+                                        {state.user && state.user.role === "client" && <li><a href="/istichara">Istichara</a></li>}
+                                        {/* display the page contain the list of all istichara*/}
+                                        {state.user && (
+                                            <li><a href="/istichara-list">Istichara List</a></li>
+                                        )}
                                         <li><a href="/faq">FAQ</a></li>
                                         <li><a href="/contact-us">Contact</a></li>
                                         {/* on the right side of the navbar */}

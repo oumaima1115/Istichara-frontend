@@ -34,7 +34,9 @@ export const deleteProfile = (data) => api.delete("/user/profile", data);
 export const getMyisticharas = () => api.get("/istichara");
 export const createIstichara = (data) => api.post("/istichara", data);
 export const updateIstichara = (id, data) => api.put(`/istichara/${id}`, data);
-export const cancelIstichara = (id) => api.delete(`/istichara/${id}`);
+export const acceptIstichara = (id) => api.patch(`/istichara/${id}/accept`);
+export const refuseIstichara = (id) => api.patch(`/istichara/${id}/refuse`);
+export const deleteIstichara = (id) => api.delete(`/istichara/${id}`);
 
 /* ==========================
    Reviews

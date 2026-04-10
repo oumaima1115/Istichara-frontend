@@ -76,12 +76,10 @@ const Profile = () => {
     );
   }
 
-  const backendBase = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/$/, '') : 'http://localhost:5000';
-  const imageSrc = profile.profilePic
-    ? profile.profilePic.startsWith('http')
+  const imageSrc =
+    profile.profilePic && profile.profilePic.startsWith('http')
       ? profile.profilePic
-      : `${backendBase}/uploads/${profile.profilePic}`
-    : 'images/resource/team-image-9.jpg';
+      : 'images/resource/team-image-9.jpg';
   const designation = profile.specialty ? `${profile.specialty} Attorney` : 'Attorney';
 
   return (
@@ -119,7 +117,7 @@ const Profile = () => {
                         <p>{profile.role === 'attorney' ? `Experienced ${profile.specialty || 'law'} attorney with ${profile.cases_won || 0} cases won.` : 'Client profile.'}, Skilled in handling a wide range of cases with professionalism and attention to detail. Focused on protecting client rights, providing clear legal guidance, and achieving the best possible outcomes.</p>
                       </div>
 
-                  <div className="pull-left padd-right-20"><Link to="/istichara" className="theme-btn btn-style-one">For Appointment</Link></div>
+                      <div className="pull-left padd-right-20"><Link to="/istichara" className="theme-btn btn-style-one">For Appointment</Link></div>
 
                     </div>
                   </div>

@@ -35,7 +35,7 @@ const Login = () => {
 
                             {/*Search Box*/}
                             <div className="search-box">
-                                <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+                                <form>
                                     <div className="form-group">
                                         <input type="search" name="search" placeholder="Search Your Needs Here" />
                                         <button type="submit" name="search" className="theme-btn search-btn"><span className="fa fa-search"></span></button>

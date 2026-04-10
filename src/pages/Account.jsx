@@ -42,7 +42,7 @@ const Account = () => {
                         <div className="col-md-6 col-sm-12 col-xs-12 column form-column">
                             <div className="styled-heading"><h2>Account Profile</h2></div>
                             <div className="default-form billing-info-form">
-                                <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/checkout.html">
+                                <form>
 
                                     <div className="row clearfix">
 
@@ -120,7 +120,7 @@ const Account = () => {
                         <div className="col-md-6 col-sm-12 col-xs-12 column form-column">
                             <div className="styled-heading"><h2>Calendar</h2></div>
                             <div className="default-form billing-info-form">
-                                <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/checkout.html">
+                                <form>
 
                                     <div className="row clearfix">
 

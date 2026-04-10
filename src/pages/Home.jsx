@@ -175,20 +175,24 @@ const Home = () => {
         }
 
         if ($.fn.owlCarousel) {
-          const testimonialCarousel = $(".testimonial-carousel.single-item-carousel");
-          if (testimonialCarousel.length && !testimonialCarousel.hasClass('owl-loaded')) {
-            testimonialCarousel.owlCarousel({
+          const carousel = $(".testimonial-carousel.single-item-carousel, .owl-carousel");
+
+          if (carousel.length && !carousel.hasClass("owl-loaded")) {
+            carousel.owlCarousel({
               loop: true,
               margin: 0,
               nav: true,
               smartSpeed: 500,
-              autoplay: 5000,
-              navText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
+              autoplay: true,
+              autoplayTimeout: 5000,
+              navText: [
+                '<span class="fa fa-angle-left"></span>',
+                '<span class="fa fa-angle-right"></span>'
+              ],
               responsive: {
                 0: { items: 1 },
                 600: { items: 1 },
-                1024: { items: 1 },
-                1400: { items: 1 }
+                1024: { items: 3 }
               }
             });
           }
@@ -714,9 +718,9 @@ const Home = () => {
                                 <figure className="image-thumb">
                                   <img
                                     src={
-                                      attorney.profilePic
-                                        ? `http://localhost:5000/uploads/${attorney.profilePic}`
-                                        : "/default.png"
+                                      attorney.profilePic && attorney.profilePic.startsWith('http')
+                                        ? attorney.profilePic
+                                        : "/images/resource/team-image-1.jpg"
                                     }
                                     alt=""
                                   />
@@ -785,7 +789,7 @@ const Home = () => {
                 <h2>Meet Our Attorneys</h2>
               </div>
 
-              <div className="row clearfix" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+              <div className="row clearfix" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {topThreeAttorneys.map((attorney, index) => (
                   <article
                     key={attorney._id}
@@ -797,15 +801,14 @@ const Home = () => {
                       <figure className="image">
                         <a href={`mailto:${attorney.email}`}>
                           <img
-
                             style={{
                               width: "100%",
                               height: "220px",
                               objectFit: "cover"
                             }}
                             src={
-                              attorney.profilePic
-                                ? `http://localhost:5000/uploads/${attorney.profilePic}`
+                              attorney.profilePic && attorney.profilePic.startsWith('http')
+                                ? attorney.profilePic
                                 : "/images/resource/team-image-1.jpg"
                             }
                             alt=""
@@ -853,7 +856,7 @@ const Home = () => {
               <figure className="man-image hidden-xs"><img src="/images/resource/man-image.png" alt="" /></figure>
 
               <div className="default-form consultation-form">
-                <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+                <form>
                   <div className="row clearfix">
                     <div className="form-group col-md-6 col-sm-12 col-xs-12">
                       <input type="text" name="fname" placeholder="First Name" required />

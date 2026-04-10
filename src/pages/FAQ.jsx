@@ -787,7 +787,7 @@ const FAQ = () => {
                     </div>
 
                     <div className="default-form">
-                        <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+                        <form>
                             <div className="row clearfix">
                                 <div className="form-group col-md-6 col-sm-12 col-xs-12">
                                     <input type="text" name="name" placeholder="Your Name" required />

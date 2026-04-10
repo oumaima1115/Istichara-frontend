@@ -38,7 +38,7 @@ const ContactUs = () => {
                             <div class="text margin-bott-40"><p>Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against. Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason.</p></div>
 
                             <div class="default-form contact-form">
-                                <form id="contact-form" name="contact_form" class="contact-form" action="https://st.ourhtmldemo.com/template/laywer-justice/inc/sendmail.php" method="post">
+                                <form id="contact-form" name="contact_form" class="contact-form">
                                     <div class="row clearfix">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" name="form_name" class="form-control" placeholder="Your Name *" required="" />

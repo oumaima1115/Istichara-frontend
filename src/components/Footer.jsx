@@ -102,7 +102,7 @@ const Footer = () => {
                                         
                                         <div className="newsletter-form">
                                             <p>Sign up for our mailing list to get latest updates and offers.</p>
-                                            <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+                                            <form>
                                                 <div className="form-group">
                                                     <input type="email" name="useremail" placeholder="Email address" required/>
                                                     <button type="submit" className="theme-btn btn-submit">Go</button>

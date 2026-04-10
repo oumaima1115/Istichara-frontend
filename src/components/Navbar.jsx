@@ -93,13 +93,11 @@ const NavBar = () => {
             try {
                 const response = await getProfileById(state.user.id);
                 const user = response?.data?.data;
-                if (user?.profilePic) {
-                    const pic = user.profilePic;
-                    const imageUrl = pic.startsWith('http') ? pic : `http://localhost:5000/uploads/${pic}`;
-                    setProfilePic(imageUrl);
-                } else {
-                    setProfilePic(null);
-                }
+                setProfilePic(
+                    user.profilePic && user.profilePic.startsWith('http')
+                        ? user.profilePic
+                        : '/default-avatar.png'
+                );
             } catch (error) {
                 console.error('Failed to load profile picture:', error);
                 setProfilePic(null);
@@ -158,7 +156,7 @@ const NavBar = () => {
 
                             {/*Search Box*/}
                             <div className="search-box">
-                                <form method="post" action="https://st.ourhtmldemo.com/template/laywer-justice/index.html">
+                                <form>
                                     <div className="form-group">
                                         <input type="search" name="search" placeholder="Search Your Needs Here" />
                                         <button type="submit" name="search" className="theme-btn search-btn"><span className="fa fa-search"></span></button>
